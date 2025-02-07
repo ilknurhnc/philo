@@ -1,7 +1,7 @@
 NAME = philo
-SRC = philo.c utils.c init.c act.c
+SRC = philo.c utils.c init.c act.c control.c
 OBJ := $(SRC:.c=.o)
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
 
 all: $(NAME)
 
