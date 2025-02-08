@@ -6,7 +6,7 @@
 /*   By: ihancer <ihancer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 13:55:45 by ihancer           #+#    #+#             */
-/*   Updated: 2025/02/07 16:27:28 by ihancer          ###   ########.fr       */
+/*   Updated: 2025/02/08 19:11:35 by ihancer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,15 @@ int init_philo(t_info *info)
     {
         info->philo[i].id = i + 1;
         info->philo[i].eat_count = 0;
-        info->philo[i].eat_done = 0;
         info->philo[i].start_time = current_time();
         info->philo[i].time_of_last_meal = current_time();
-        info->philo[i].right_fork = &info->forks[i];
+        info->philo[i].left_fork = &info->forks[i];
 
-        if (i == 0)
-            info->philo[i].left_fork = &info->forks[info->num_of_philo - 1];
-        else
-            info->philo[i].left_fork = &info->forks[i - 1];
-            
+        // if (i == 0)
+        //     info->philo[i].right_fork = &info->forks[info->num_of_philo - 1];
+        // else
+        //     info->philo[i].right_fork = &info->forks[i - 1];
+        info->philo[i].right_fork = &info->forks[(i + 1) % info->num_of_philo];
         info->philo[i].info = info;
         i++;
     }

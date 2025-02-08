@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ihancer <ihancer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/01 13:48:29 by ihancer           #+#    #+#             */
-/*   Updated: 2025/02/07 15:41:08 by ihancer          ###   ########.fr       */
+/*   Created: 2025/02/08 17:45:49 by ihancer           #+#    #+#             */
+/*   Updated: 2025/02/08 19:01:41 by ihancer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	init_program(t_info *info)
 			printf("Thread creation failed for philosopher %d\n", i);
 		i++;
 	}
-	check_philo(info);
+	//check_philo(info);
 	i = -1;
 	while (++i < info->num_of_philo)
 	{
@@ -65,7 +65,7 @@ static int	init_program(t_info *info)
 	return 0;
 }
 
-static void	finish_program(t_info *info)
+ void	finish_program(t_info *info)
 {
 	int	i;
 
@@ -76,7 +76,6 @@ static void	finish_program(t_info *info)
 	pthread_mutex_destroy(&info->write_mutex);
 	pthread_mutex_destroy(&info->eat_mutex);
 	pthread_mutex_destroy(&info->eat_done_mutex);
-
 }
 
 int	main(int argc, char *argv[])
@@ -95,5 +94,7 @@ int	main(int argc, char *argv[])
 	}
 	
 	init_program(&info);
-	finish_program(&info);
+    check_philo(&info);
+    finish_program(&info);
+	    return (0);
 }

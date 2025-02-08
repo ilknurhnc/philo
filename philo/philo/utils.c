@@ -6,7 +6,7 @@
 /*   By: ihancer <ihancer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 18:22:26 by ihancer           #+#    #+#             */
-/*   Updated: 2025/02/07 14:09:03 by ihancer          ###   ########.fr       */
+/*   Updated: 2025/02/08 18:39:09 by ihancer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	ft_usleep(t_philo *philo, size_t ms)
 	start_time = current_time();
 	while (current_time() - start_time < ms)
 	{
-		if (!is_still_alive(philo))
+		if (!is_still_alive(philo->info))
 			return ;
 		usleep(500);
 	}
