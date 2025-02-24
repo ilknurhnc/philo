@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   act.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihancer <ihancer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ilknurhancer <ilknurhancer@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 13:48:16 by ihancer           #+#    #+#             */
-/*   Updated: 2025/02/08 19:16:52 by ihancer          ###   ########.fr       */
+/*   Updated: 2025/02/24 10:57:05 by ilknurhance      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,29 @@
 
 void	write_status(t_philo *philo, char *status)
 {
-	pthread_mutex_lock(&philo->info->eat_done_mutex);
-	if (philo->info->eat_done == 1)
-	{
-		pthread_mutex_unlock(&philo->info->eat_done_mutex);
-		return ;
-	}
-	pthread_mutex_unlock(&philo->info->eat_done_mutex);
+	
 	pthread_mutex_lock(&philo->info->write_mutex);
 	printf("%zu %d %s\n", current_time() - philo->start_time, philo->id, status);
+	pthread_mutex_lock(&philo->info->eat_done_mutex);
+	
+	pthread_mutex_lock(&philo->info->end_mutex);
 	if(philo->info->end == 1 || philo->info->eat_done == 1)
 	{
+		pthread_mutex_unlock(&philo->info->end_mutex);
 		pthread_mutex_unlock(&philo->info->write_mutex);
+		pthread_mutex_unlock(&philo->info->eat_done_mutex);
 		finish_program(philo->info);
-		
 	}
+	pthread_mutex_unlock(&philo->info->end_mutex);
 	pthread_mutex_unlock(&philo->info->write_mutex);
+	pthread_mutex_unlock(&philo->info->eat_done_mutex);
 	return ;
 }
 static void	waiting(t_philo *philo)
 {
-	write_status(philo, "is sleeping");
-	ft_usleep(philo, philo->info->time_sleep);
-	write_status(philo, "is thinking");
+		write_status(philo, "is sleeping");
+		ft_usleep(philo, philo->info->time_sleep);
+		write_status(philo, "is thinking");
 	return ;
 }
 static void	eating(t_philo *philo)
@@ -70,8 +70,10 @@ void	*life_cycle(void *arg)
 	}
 	if (philo->id % 2 == 0)
 		ft_usleep(philo, 1);
-	eating(philo);
-	waiting(philo);
-
+	while(philo->info->end != 1 || philo->info->eat_done != 1)
+	{
+		eating(philo);
+		waiting(philo);
+	}
 	return arg;
 }

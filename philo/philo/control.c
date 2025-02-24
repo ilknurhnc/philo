@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   control.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihancer <ihancer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ilknurhancer <ilknurhancer@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 05:14:48 by ihancer           #+#    #+#             */
-/*   Updated: 2025/02/08 19:24:00 by ihancer          ###   ########.fr       */
+/*   Updated: 2025/02/23 21:44:53 by ilknurhance      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ int	check_starvation(t_info *info)
 			pthread_mutex_lock(&info->end_mutex);
 			info->end = 1;
 			pthread_mutex_unlock(&info->end_mutex);
-			write_status(&info->philo[i], "is dead");
+			write_status(&info->philo[i], "died");
+			
 			pthread_mutex_unlock(&info->eat_mutex);
 			return (0);
 		}
@@ -69,46 +70,28 @@ int	is_complated_eat(t_info *info)
 
 	check = 0;
 	i = 0;
-	while (i < info->num_of_philo)
+	if(info->num_meals != -1)
 	{
-		pthread_mutex_lock(&info->eat_mutex);
-		if (info->time_eat <= info->philo[i].eat_count)
-			check++;
-		pthread_mutex_unlock(&info->eat_mutex);
-		i++;
-	}
-	if (check == info->num_of_philo)
-	{
-		pthread_mutex_lock(&info->eat_done_mutex);
-		info->eat_done = 1;
-		pthread_mutex_unlock(&info->eat_done_mutex);
-		write_status(&info->philo[i], "is full");
-		return (0);
-	}
-	return (1);
-}
-
-int	is_still_alive(t_info *info)
-{
-	int i;
-
-	i = 0;
-	while(i < info->num_of_philo)
-	{
-		pthread_mutex_lock(&info->end_mutex);
-		pthread_mutex_lock(&info->eat_done_mutex);
-		if (info->end == 1 || info->eat_done == 1)
+			while (i < info->num_of_philo)
 		{
-			pthread_mutex_unlock(&info->end_mutex);
+			pthread_mutex_lock(&info->eat_mutex);
+				if (info->num_meals <= info->philo[i].eat_count)
+					check++;
+			pthread_mutex_unlock(&info->eat_mutex);
+			i++;
+		}
+		if (check == info->num_of_philo)
+		{
+			pthread_mutex_lock(&info->eat_done_mutex);
+			info->eat_done = 1;
 			pthread_mutex_unlock(&info->eat_done_mutex);
+			write_status(&info->philo[i], "is full");
 			return (0);
 		}
-		pthread_mutex_unlock(&info->eat_done_mutex);
-		pthread_mutex_unlock(&info->end_mutex);
-		i++;
 	}
 	return (1);
 }
+
 void	check_philo(t_info *info)
 {
 	while (1)

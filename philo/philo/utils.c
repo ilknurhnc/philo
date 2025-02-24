@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihancer <ihancer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ilknurhancer <ilknurhancer@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 18:22:26 by ihancer           #+#    #+#             */
-/*   Updated: 2025/02/08 18:39:09 by ihancer          ###   ########.fr       */
+/*   Updated: 2025/02/23 21:20:49 by ilknurhance      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	ft_usleep(t_philo *philo, size_t ms)
 	start_time = current_time();
 	while (current_time() - start_time < ms)
 	{
-		if (!is_still_alive(philo->info))
+		if (philo->info->end == 1 || philo->info->eat_done == 1)
 			return ;
 		usleep(500);
 	}

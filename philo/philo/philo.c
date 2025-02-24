@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihancer <ihancer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ilknurhancer <ilknurhancer@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 17:45:49 by ihancer           #+#    #+#             */
-/*   Updated: 2025/02/08 19:01:41 by ihancer          ###   ########.fr       */
+/*   Updated: 2025/02/23 20:14:43 by ilknurhance      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,20 +48,20 @@ static int	init_program(t_info *info)
 		i++;
 	}
 	//check_philo(info);
-	i = -1;
-	while (++i < info->num_of_philo)
-	{
-		if (info->num_of_philo == 1)
-		{
-			if (pthread_detach(info->philo[i].thread))
-				return(printf("Detach Error for philosopher\n"));
-		}
-		else
-		{
-			if (pthread_join(info->philo[i].thread, NULL))
-				return(printf("Join Error for philosopher %d\n", i));
-		}
-	}
+	//i = -1;
+	// while (++i < info->num_of_philo)
+	// {
+	// 	if (info->num_of_philo == 1)
+	// 	{
+	// 		if (pthread_detach(info->philo[i].thread))
+	// 			return(printf("Detach Error for philosopher\n"));
+	// 	}
+	// 	else
+	// 	{
+	// 		if (pthread_join(info->philo[i].thread, NULL))
+	// 			return(printf("Join Error for philosopher %d\n", i));
+	// 	}
+	// }
 	return 0;
 }
 
@@ -70,6 +70,14 @@ static int	init_program(t_info *info)
 	int	i;
 
 	i = -1;
+	while (++i < info->num_of_philo)
+	{
+		if (info->num_of_philo == 1)
+			pthread_detach(info->philo[i].thread);
+		else
+			(pthread_join(info->philo[i].thread, NULL));
+	}
+	i=-1;
 	while (++i < info->num_of_philo)
 		pthread_mutex_destroy(&info->forks[i]);
 	pthread_mutex_destroy(&info->end_mutex);
@@ -92,7 +100,6 @@ int	main(int argc, char *argv[])
 		printf("There are something that cannot be initialized\n");
 		return (1);
 	}
-	
 	init_program(&info);
     check_philo(&info);
     finish_program(&info);

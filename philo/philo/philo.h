@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ihancer <ihancer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ilknurhancer <ilknurhancer@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 13:48:39 by ihancer           #+#    #+#             */
-/*   Updated: 2025/02/08 19:20:45 by ihancer          ###   ########.fr       */
+/*   Updated: 2025/02/23 21:26:05 by ilknurhance      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct s_philo
 	int					id;
 	pthread_mutex_t		*right_fork;
 	pthread_mutex_t		*left_fork;
-	size_t				eat_count;
+	int				eat_count;
 	size_t				start_time;
 	size_t				time_of_last_meal;
 	pthread_t			thread;
