@@ -19,7 +19,6 @@ typedef struct s_philo
 	size_t			time_of_last_meal;
 	int				eat_count;
 	int				chair_no;
-	bool is_done;
 	struct s_info	*t_info;
 
 }					t_philo;
