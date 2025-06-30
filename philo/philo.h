@@ -1,11 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ihancer <ihancer@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/04 14:58:33 by ihancer           #+#    #+#             */
+/*   Updated: 2025/06/21 14:40:19 by ihancer          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHILO_H
 # define PHILO_H
 
-# include <stdbool.h>
-# include <errno.h>
 # include <pthread.h>
+# include <stdbool.h>
 # include <stdio.h>
-# include <stdlib.h>
 # include <sys/time.h>
 # include <unistd.h>
 
@@ -36,7 +46,7 @@ typedef struct s_info
 	pthread_mutex_t	write_mutex;
 	pthread_mutex_t	end_mutex;
 	int				completed_philos;
-	bool 				end;
+	bool			end;
 
 }					t_info;
 
@@ -45,12 +55,12 @@ int					init_info(t_info *data, int argc, char **argv);
 int					init_philo(t_info *info);
 int					init_forks(t_info *info);
 int					init_mutex(t_info *info);
-void				*routine(void *arg);
+void				*loop(void *arg);
 void				life_cycle(t_philo *philo);
 long				ft_atol(char *str);
 void				ft_usleep(size_t ms);
 size_t				get_current_time(void);
-int					join(t_info *info, int i);
+int					ft_join(t_info *info, int i);
 int					write_status(t_philo *philo, char *status);
 int					start_program(t_info *info);
 

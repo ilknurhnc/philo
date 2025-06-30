@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ihancer <ihancer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/12 11:30:54 by ihancer           #+#    #+#             */
-/*   Updated: 2025/03/12 12:32:01 by ihancer          ###   ########.fr       */
+/*   Created: 2025/05/11 23:22:30 by ihancer           #+#    #+#             */
+/*   Updated: 2025/05/12 00:09:23 by ihancer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ void	check_starvation(t_info *info)
 	{
 		pthread_mutex_lock(&info->philo[j].last_meal_mutex);
 		pthread_mutex_lock(&info->end_mutex);
-		if ((get_current_time() - info->philo[j].time_of_last_meal) > info->time_die && !info->end)
+		if ((get_current_time()
+				- info->philo[j].time_of_last_meal) > info->time_die
+			&& !info->end)
 		{
 			pthread_mutex_unlock(&info->end_mutex);
 			write_status(&info->philo[j], "died");

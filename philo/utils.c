@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ihancer <ihancer@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/04 14:56:40 by ihancer           #+#    #+#             */
+/*   Updated: 2025/06/21 14:39:56 by ihancer          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 size_t	get_current_time(void)
@@ -41,14 +53,14 @@ long	ft_atol(char *str)
 	return (sign * result);
 }
 
-int	join(t_info *info, int i)
+int	ft_join(t_info *info, int i)
 {
 	if (info->num_of_philo == 1)
 	{
 		if (pthread_detach(info->philo[i].thread))
 		{
 			printf("Detach Error.\n");
-			return (EXIT_FAILURE);
+			return (1);
 		}
 	}
 	else
@@ -56,16 +68,15 @@ int	join(t_info *info, int i)
 		if (pthread_join(info->philo[i].thread, NULL))
 		{
 			printf("Join Error.\n");
-			return (EXIT_FAILURE);
+			return (1);
 		}
 	}
-	return (EXIT_SUCCESS);
+	return (0);
 }
 
 int	write_status(t_philo *philo, char *status)
 {
-	
-    pthread_mutex_lock(&philo->t_info->write_mutex);
+	pthread_mutex_lock(&philo->t_info->write_mutex);
 	pthread_mutex_lock(&philo->t_info->end_mutex);
 	if (philo->t_info->end == false)
 	{
@@ -74,5 +85,5 @@ int	write_status(t_philo *philo, char *status)
 	}
 	pthread_mutex_unlock(&philo->t_info->write_mutex);
 	pthread_mutex_unlock(&philo->t_info->end_mutex);
-	return (EXIT_SUCCESS);
+	return (0);
 }

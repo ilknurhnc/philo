@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ihancer <ihancer@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/04 14:57:24 by ihancer           #+#    #+#             */
+/*   Updated: 2025/06/21 11:40:11 by ihancer          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 int	init_mutex(t_info *info)
 {
-    int	i;
+	int	i;
 
 	i = 0;
 	while (i < info->num_of_philo)
@@ -13,12 +25,13 @@ int	init_mutex(t_info *info)
 	}
 	pthread_mutex_init(&info->end_mutex, NULL);
 	pthread_mutex_init(&info->write_mutex, NULL);
-	return (EXIT_SUCCESS);
+	return (0);
 }
 
 int	init_forks(t_info *info)
 {
-	int i;
+	int	i;
+
 	i = 0;
 	while (i < info->num_of_philo - 1)
 	{
@@ -28,7 +41,7 @@ int	init_forks(t_info *info)
 	}
 	info->philo[i].left_fork = &info->forks[i];
 	info->philo[i].right_fork = &info->forks[0];
-	return (EXIT_SUCCESS);
+	return (0);
 }
 
 int	init_philo(t_info *info)
@@ -44,10 +57,10 @@ int	init_philo(t_info *info)
 		info->philo[i].t_info = info;
 		i++;
 	}
-	return (EXIT_SUCCESS);
+	return (0);
 }
 
-int init_info(t_info *info, int argc, char **argv)
+int	init_info(t_info *info, int argc, char **argv)
 {
 	info->num_of_philo = ft_atol(argv[1]);
 	info->time_die = ft_atol(argv[2]);
@@ -59,6 +72,5 @@ int init_info(t_info *info, int argc, char **argv)
 		info->num_meals = -1;
 	info->completed_philos = 0;
 	info->end = false;
-	return (EXIT_SUCCESS);
+	return (0);
 }
-
