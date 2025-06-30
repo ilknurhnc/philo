@@ -1,23 +1,19 @@
-NAME    = philo
-
-SRC     = philo/philo.c philo/utils.c philo/init.c philo/act.c philo/control.c
-OBJS    = $(SRC:.c=.o)
-
-CC      = @gcc
-CFLAGS  = -Wall -Wextra -Werror -fsanitize=thread
-RM      = rm -rf
-
-$(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+NAME = philo
+SRC = philo.c utils.c init.c act.c control.c
+OBJ := $(SRC:.c=.o)
+CFLAGS = -Wall -Wextra -Werror
 
 all: $(NAME)
 
+$(NAME): $(OBJ)
+	$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
+
 clean:
-	@$(RM) $(OBJS)
+	rm -f $(OBJ)
 
 fclean: clean
-	@$(RM) $(NAME)
+	rm -f $(NAME)
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: re fclean clean all
